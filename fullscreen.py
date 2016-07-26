@@ -12,17 +12,17 @@ class FsApp(QMainWindow):
 		# Set up the user interface from Designer.
 		self.ui = Ui_MainWindow()
 		self.ui.setupUi(self)
-		self.showMaximized()
-		self.showFullScreen()
 		self.setWindowOpacity(0.7)
 		self.setAttribute(QtCore.Qt.WA_TranslucentBackground, True)
 
 		# Connect up the buttons.
-		#self.ui.okButton.clicked.connect(self.accept)
 		self.ui.butExit.clicked.connect(self.exit)
 
 		self.rubberband = QRubberBand(QRubberBand.Rectangle, self)
 		self.selRect = None
+
+		self.showMaximized()
+		self.showFullScreen()
 
 	def mousePressEvent(self, event):
 		self.origin = event.pos()
@@ -37,8 +37,8 @@ class FsApp(QMainWindow):
 
 	def mouseReleaseEvent(self, event):
 		if self.rubberband.isVisible():
-			self.rubberband.hide()
 			self.selRect = self.rubberband.geometry()
+			self.rubberband.hide()
 		QWidget.mouseReleaseEvent(self, event)
 		print("hallo")
 
