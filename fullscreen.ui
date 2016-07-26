@@ -6,15 +6,21 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>801</width>
-    <height>595</height>
+    <width>343</width>
+    <height>253</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <property name="windowOpacity">
-   <double>0.500000000000000</double>
+   <double>1.000000000000000</double>
   </property>
   <property name="autoFillBackground">
    <bool>false</bool>
@@ -23,17 +29,23 @@
    <string notr="true">background: white</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QPushButton" name="butExit">
+   <widget class="QLabel" name="labPix">
     <property name="geometry">
      <rect>
-      <x>650</x>
-      <y>500</y>
-      <width>99</width>
-      <height>27</height>
+      <x>0</x>
+      <y>0</y>
+      <width>341</width>
+      <height>251</height>
      </rect>
     </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
     <property name="text">
-     <string>PushButton</string>
+     <string/>
     </property>
    </widget>
   </widget>

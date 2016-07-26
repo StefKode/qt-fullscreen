@@ -3,29 +3,38 @@ from PyQt5 import QtCore, QtGui
 from ui_fullscreen import Ui_MainWindow
 import sys
 
-
 class FsApp(QMainWindow):
 
-	def __init__(self):
+	def __init__(self, app):
 		super(FsApp, self).__init__()
+		self.app       = app
+		self.selRect   = None
+		self.screenPix = None
 
 		# Set up the user interface from Designer.
 		self.ui = Ui_MainWindow()
 		self.ui.setupUi(self)
-		self.setWindowOpacity(0.5)
-		self.setAttribute(QtCore.Qt.WA_TranslucentBackground, True)
+		#self.setWindowOpacity(0.5)
+		#self.setAttribute(QtCore.Qt.WA_TranslucentBackground, True)
+		self.captureScreen()
+		self.showMaximized()
+		self.showFullScreen()
 
-		# Connect up the buttons.
-		self.ui.butExit.clicked.connect(self.exit)
+		#capture screen and display
+		self.ui.labPix.resize(self.size())
+		self.ui.labPix.setScaledContents(True)
+		self.ui.labPix.setPixmap(self.screenPix)
 
+		#start rubberband
 		self.rubberband = QRubberBand(QRubberBand.Rectangle, self)
-		self.selRect = None
 		bla = QtGui.QPalette()
 		bla.setBrush(QtGui.QPalette.Highlight, QtGui.QBrush(QtCore.Qt.red))
 		self.rubberband.setPalette(bla)
+		self.rubberband.setWindowOpacity(1.0)
 
-		self.showMaximized()
-		self.showFullScreen()
+	def captureScreen(self):
+		screens = self.app.screens()
+		self.screenPix = screens[0].grabWindow(0)
 
 	def mousePressEvent(self, event):
 		self.origin = event.pos()
@@ -42,14 +51,18 @@ class FsApp(QMainWindow):
 		if self.rubberband.isVisible():
 			self.selRect = self.rubberband.geometry()
 			self.rubberband.hide()
-			self.exit()
+			codePix = self.screenPix.copy(	self.selRect.x(),
+							self.selRect.y(), 
+                                              		self.selRect.width(),
+							self.selRect.height())
+			QApplication.clipboard().setPixmap(codePix)
+			#self.exit()
 		QWidget.mouseReleaseEvent(self, event)
-		print("hallo")
 
 	def exit(self):
 		sys.exit(0)
 
 app = QApplication(sys.argv)
-ui = FsApp()
+ui = FsApp(app)
 ui.show()
 sys.exit(app.exec_())

@@ -11,15 +11,26 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(801, 595)
-        MainWindow.setWindowOpacity(0.5)
+        MainWindow.resize(343, 253)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(MainWindow.sizePolicy().hasHeightForWidth())
+        MainWindow.setSizePolicy(sizePolicy)
+        MainWindow.setWindowOpacity(1.0)
         MainWindow.setAutoFillBackground(False)
         MainWindow.setStyleSheet("background: white")
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
-        self.butExit = QtWidgets.QPushButton(self.centralwidget)
-        self.butExit.setGeometry(QtCore.QRect(650, 500, 99, 27))
-        self.butExit.setObjectName("butExit")
+        self.labPix = QtWidgets.QLabel(self.centralwidget)
+        self.labPix.setGeometry(QtCore.QRect(0, 0, 341, 251))
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Maximum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.labPix.sizePolicy().hasHeightForWidth())
+        self.labPix.setSizePolicy(sizePolicy)
+        self.labPix.setText("")
+        self.labPix.setObjectName("labPix")
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
@@ -28,5 +39,4 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.butExit.setText(_translate("MainWindow", "PushButton"))
 
