@@ -19,6 +19,9 @@
   <property name="autoFillBackground">
    <bool>false</bool>
   </property>
+  <property name="styleSheet">
+   <string notr="true">background: white</string>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QPushButton" name="butExit">
     <property name="geometry">

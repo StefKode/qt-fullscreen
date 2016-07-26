@@ -1,5 +1,5 @@
 from PyQt5.QtWidgets import QApplication, QMainWindow, QRubberBand, QWidget
-from PyQt5 import QtCore
+from PyQt5 import QtCore, QtGui
 from ui_fullscreen import Ui_MainWindow
 import sys
 
@@ -12,7 +12,7 @@ class FsApp(QMainWindow):
 		# Set up the user interface from Designer.
 		self.ui = Ui_MainWindow()
 		self.ui.setupUi(self)
-		self.setWindowOpacity(0.7)
+		self.setWindowOpacity(0.5)
 		self.setAttribute(QtCore.Qt.WA_TranslucentBackground, True)
 
 		# Connect up the buttons.
@@ -20,6 +20,9 @@ class FsApp(QMainWindow):
 
 		self.rubberband = QRubberBand(QRubberBand.Rectangle, self)
 		self.selRect = None
+		bla = QtGui.QPalette()
+		bla.setBrush(QtGui.QPalette.Highlight, QtGui.QBrush(QtCore.Qt.red))
+		self.rubberband.setPalette(bla)
 
 		self.showMaximized()
 		self.showFullScreen()
@@ -39,6 +42,7 @@ class FsApp(QMainWindow):
 		if self.rubberband.isVisible():
 			self.selRect = self.rubberband.geometry()
 			self.rubberband.hide()
+			self.exit()
 		QWidget.mouseReleaseEvent(self, event)
 		print("hallo")
 

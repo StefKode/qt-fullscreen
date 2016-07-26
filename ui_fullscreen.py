@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '/home/stefan/PycharmProjects/fullscreen/fullscreen.ui'
+# Form implementation generated from reading ui file 'fullscreen.ui'
 #
 # Created by: PyQt5 UI code generator 5.5.1
 #
@@ -14,6 +14,7 @@ class Ui_MainWindow(object):
         MainWindow.resize(801, 595)
         MainWindow.setWindowOpacity(0.5)
         MainWindow.setAutoFillBackground(False)
+        MainWindow.setStyleSheet("background: white")
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.butExit = QtWidgets.QPushButton(self.centralwidget)
@@ -28,14 +29,4 @@ class Ui_MainWindow(object):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.butExit.setText(_translate("MainWindow", "PushButton"))
-
-
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
-    sys.exit(app.exec_())
 
