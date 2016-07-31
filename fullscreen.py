@@ -5,64 +5,70 @@ import sys
 
 class FsApp(QMainWindow):
 
-	def __init__(self, app):
-		super(FsApp, self).__init__()
-		self.app       = app
-		self.selRect   = None
-		self.screenPix = None
+    def __init__(self, app):
+        super(FsApp, self).__init__()
+        self.app       = app
+        self.selRect   = None
+        self.screenPix = None
 
-		# Set up the user interface from Designer.
-		self.ui = Ui_MainWindow()
-		self.ui.setupUi(self)
-		#self.setWindowOpacity(0.5)
-		#self.setAttribute(QtCore.Qt.WA_TranslucentBackground, True)
-		self.captureScreen()
-		self.showMaximized()
-		self.showFullScreen()
+        # Set up the user interface from Designer.
+        self.ui = Ui_MainWindow()
+        self.ui.setupUi(self)
+        #self.setWindowOpacity(0.5)
+        #self.setAttribute(QtCore.Qt.WA_TranslucentBackground, True)
+        self.captureScreen()
+        self.showMaximized()
+        self.showFullScreen()
 
-		#capture screen and display
-		self.ui.labPix.resize(self.size())
-		self.ui.labPix.setScaledContents(True)
-		self.ui.labPix.setPixmap(self.screenPix)
 
-		#start rubberband
-		self.rubberband = QRubberBand(QRubberBand.Rectangle, self)
-		bla = QtGui.QPalette()
-		bla.setBrush(QtGui.QPalette.Highlight, QtGui.QBrush(QtCore.Qt.red))
-		self.rubberband.setPalette(bla)
-		self.rubberband.setWindowOpacity(1.0)
+        #capture screen and display
+        rec = QApplication.desktop().screenGeometry()
+        height = rec.height()
+        width = rec.width()
+        self.ui.labPix.resize(width, height)
+        self.ui.labPix.setScaledContents(True)
+        self.ui.labPix.setPixmap(self.screenPix)
 
-	def captureScreen(self):
-		screens = self.app.screens()
-		self.screenPix = screens[0].grabWindow(0)
+        #start rubberband
+        self.rubberband = QRubberBand(QRubberBand.Rectangle, self)
+        bla = QtGui.QPalette()
+        bla.setBrush(QtGui.QPalette.Highlight, QtGui.QBrush(QtCore.Qt.red))
+        self.rubberband.setPalette(bla)
+        self.rubberband.setWindowOpacity(1.0)
 
-	def mousePressEvent(self, event):
-		self.origin = event.pos()
-		self.rubberband.setGeometry(QtCore.QRect(self.origin, QtCore.QSize()))
-		self.rubberband.show()
-		QWidget.mousePressEvent(self, event)
+    def captureScreen(self):
+        screens = self.app.screens()
+        self.screenPix = screens[0].grabWindow(0)
 
-	def mouseMoveEvent(self, event):
-		if self.rubberband.isVisible():
-			self.rubberband.setGeometry(QtCore.QRect(self.origin, event.pos()).normalized())
-		QWidget.mouseMoveEvent(self, event)
+    def mousePressEvent(self, event):
+        self.origin = event.pos()
+        self.rubberband.setGeometry(QtCore.QRect(self.origin, QtCore.QSize()))
+        self.rubberband.show()
+        QWidget.mousePressEvent(self, event)
 
-	def mouseReleaseEvent(self, event):
-		if self.rubberband.isVisible():
-			self.selRect = self.rubberband.geometry()
-			self.rubberband.hide()
-			codePix = self.screenPix.copy(	self.selRect.x(),
-							self.selRect.y(), 
-                                              		self.selRect.width(),
-							self.selRect.height())
-			QApplication.clipboard().setPixmap(codePix)
-			#self.exit()
-		QWidget.mouseReleaseEvent(self, event)
+    def mouseMoveEvent(self, event):
+        if self.rubberband.isVisible():
+            self.rubberband.setGeometry(QtCore.QRect(self.origin, event.pos()).normalized())
+        QWidget.mouseMoveEvent(self, event)
 
-	def exit(self):
-		sys.exit(0)
+    def mouseReleaseEvent(self, event):
+        if self.rubberband.isVisible():
+            self.selRect = self.rubberband.geometry()
+            self.rubberband.hide()
+            codePix = self.screenPix.copy(    self.selRect.x(),
+                            self.selRect.y(), 
+                            self.selRect.width(),
+                            self.selRect.height())
+            QApplication.clipboard().setPixmap(codePix)
+            self.exit()
+        QWidget.mouseReleaseEvent(self, event)
+
+    def exit(self):
+        sys.exit(0)
 
 app = QApplication(sys.argv)
 ui = FsApp(app)
 ui.show()
 sys.exit(app.exec_())
+
+# vim: tabstop=4 shiftwidth=4 expandtab
